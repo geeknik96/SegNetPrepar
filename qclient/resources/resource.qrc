@@ -1,0 +1,22 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+        <file>icons/setting.png</file>
+        <file>icons/setting_connected.png</file>
+        <file>icons/select_tool.png</file>
+        <file>icons/correction.png</file>
+        <file>icons/correction_bg.png</file>
+        <file>icons/help.png</file>
+        <file>icons/qt.png</file>
+        <file>icons/app_icon.png</file>
+    </qresource>
+    <qresource>
+        <file>cursors/cross.png</file>
+        <file>cursors/pencil.png</file>
+    </qresource>
+    <qresource>
+        <file>noImage.png</file>
+        <file>done.png</file>
+        <file>error.png</file>
+        <file>app_icon-1024.png</file>
+    </qresource>
+</RCC>
