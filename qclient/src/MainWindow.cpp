@@ -249,12 +249,14 @@ void MainWindow::apply()
 {
     if (!mLoader.ok())
     {
+        qDebug() << "!mLoader.ok()";
         mImageViewer->setImage(QImage(":/noImage.png"));
         mImageViewer->setMode(ImageViewer::NotAction);
         return;
     }
     if (!mGrubCutter.ok())
     {
+        qDebug() << "!mGrubCutter.ok())";
         mImageViewer->setImage(QImage(":/error.png"));
         mImageViewer->setMode(ImageViewer::NotAction);
         return;
@@ -270,13 +272,11 @@ void MainWindow::apply()
     }
     mRects.clear();
     mPaths.clear();
-    if (mGrubCutter.ok())
-        mImageViewer->setImage(mGrubCutter.getCurrentImage());
-    else {
-        mImageViewer->setImage(QImage(":/error.png"));
-        mImageViewer->setMode(ImageViewer::NotAction);
-        return;
-    }
+
+    const QImage &image = mGrubCutter.getCurrentImage();
+    if (image.isNull()) qDebug() << "image is null!!!";
+    mImageViewer->setImage(image);
+
     statusBar()->showMessage("If ok: click Next elif choose correction tool");
 }
 
@@ -285,6 +285,7 @@ void MainWindow::nextClass()
     qDebug() << "nextClass";
     if (!mLoader.ok())
     {
+        qDebug() << "!mLoader.ok()";
         mImageViewer->setImage(QImage(":/noImage.png"));
         mImageViewer->setMode(ImageViewer::NotAction);
         return;
@@ -292,8 +293,12 @@ void MainWindow::nextClass()
     mRects.clear();
     mPaths.clear();
     if (mGrubCutter.ok())
+    {
+        qDebug() << "mGrubCutter.ok()";
         mGrubCutter.nextClass();
+    }
     else {
+        qDebug() << "!mGrubCutter.ok()";
         mImageViewer->setImage(QImage(":/error.png"));
         mImageViewer->setMode(ImageViewer::NotAction);
         return;
@@ -308,14 +313,17 @@ void MainWindow::sendToServer()
     qDebug() << "nendToServer";
     if (!mLoader.ok())
     {
+        qDebug() << "!mLoader.ok()";
         mImageViewer->setImage(QImage(":/noImage.png"));
         mImageViewer->setMode(ImageViewer::NotAction);
         return;
     }
     if (mGrubCutter.ok())   {
+        qDebug() << "mGrubCutter.ok()";
         mLoader.load(mGrubCutter.get());
         mImageViewer->setImage(mGrubCutter.getCurrentImage());
     } else {
+        qDebug() << "!mGrubCutter.ok()";
         mImageViewer->setImage(QImage(":/error.png"));
         mImageViewer->setMode(ImageViewer::NotAction);
         return;
@@ -328,12 +336,14 @@ void MainWindow::next()
 {
     if (!mLoader.ok())
     {
+        qDebug() << "!mLoader.ok()";
         mImageViewer->setImage(QImage(":/noImage.png"));
         mImageViewer->setMode(ImageViewer::NotAction);
         return;
     }
     if (!mGrubCutter.ok())
     {
+        qDebug() << "!mGrubCutter.ok()";
         return;
     }
     int next = mCurrectClass + 1;
