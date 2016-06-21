@@ -10,7 +10,6 @@
 #include <QImage>
 #include <QTcpSocket>
 
-
 class ImageLoader  {
 public:
     enum Status {

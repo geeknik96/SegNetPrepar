@@ -157,5 +157,3 @@ ImageViewer::Mode ImageViewer::mode()
 {
     return Mode(mMode);
 }
-
-

@@ -6,7 +6,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 add_definitions(-std=c++11)
-add_definitions(-DQT_NO_DEBUG_OUTPUT)
+#add_definitions(-DQT_NO_DEBUG_OUTPUT)
 
 set(QtLibs Qt5Widgets Qt5Network)
 

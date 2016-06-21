@@ -4,6 +4,8 @@
 
 #include "GCModule.h"
 
+#include <QDebug>
+
 cv::Mat GCModule::cast(const QImage &qImage)
 {
     void * data = const_cast<uchar*>(qImage.bits());
@@ -46,6 +48,7 @@ QImage GCModule::getCurrentImage()
 
 QImage GCModule::setCorrectionsPoints(const QVector<QPoint> &points, CorrectionType type)
 {
+    qDebug() << "GCModule::setCorrectionsPoints(" << points << ");";
     static const int radius = 1;
     static const int thickness = -1;
     uchar value = type == BackgroundSelect ? cv::GC_BGD : cv::GC_FGD;
@@ -84,6 +87,7 @@ QImage GCModule::get()
 
 QImage GCModule::setRects(const QVector<QRect> &rects)
 {
+    qDebug() << "GCModule::setRects(" << rects << ");";
     for (auto & rect : rects)
     {
         cv::Mat mask;
@@ -132,4 +136,3 @@ bool GCModule::ok()
 {
     return !mInputImage.empty();
 }
-

@@ -82,14 +82,15 @@ int ImageLoader::readID(const QByteArray &bytes)
 
 bool ImageLoader::doRequest(const QByteArray &request, QByteArray &response) const
 {
+    static const int timeout = 5000;
     mTcpSocket.connectToHost(mHost, mPort);
 
-    if (mTcpSocket.waitForConnected())
+    if (mTcpSocket.waitForConnected(timeout))
     {
         mTcpSocket.write(request);
-        if (mTcpSocket.waitForBytesWritten())
+        if (mTcpSocket.waitForBytesWritten(timeout))
         {
-            while(mTcpSocket.waitForReadyRead())
+            while(mTcpSocket.waitForReadyRead(timeout))
                 response.append(mTcpSocket.readAll());
 
             mTcpSocket.disconnectFromHost();
@@ -102,10 +103,12 @@ bool ImageLoader::doRequest(const QByteArray &request, QByteArray &response) con
     return false;
 }
 
-bool ImageLoader::ok() const {
+bool ImageLoader::ok() const
+{
     return mId != -1;
 }
 
-char *ImageLoader::number(int &num) {
+char *ImageLoader::number(int &num)
+{
     return reinterpret_cast<char*>(&num);
 }

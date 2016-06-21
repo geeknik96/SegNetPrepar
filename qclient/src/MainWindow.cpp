@@ -169,6 +169,7 @@ void MainWindow::setConnectionIcon()
 
 void MainWindow::nextImage()
 {
+    qDebug() << "nextImage";
     int status = mLoader.get(mWorkImage);
     switch (status) {
         case ImageLoader::DONE:
@@ -281,6 +282,7 @@ void MainWindow::apply()
 
 void MainWindow::nextClass()
 {
+    qDebug() << "nextClass";
     if (!mLoader.ok())
     {
         mImageViewer->setImage(QImage(":/noImage.png"));
@@ -303,6 +305,7 @@ void MainWindow::nextClass()
 
 void MainWindow::sendToServer()
 {
+    qDebug() << "nendToServer";
     if (!mLoader.ok())
     {
         mImageViewer->setImage(QImage(":/noImage.png"));
