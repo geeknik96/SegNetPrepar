@@ -62,6 +62,9 @@ MainWindow::MainWindow() : mCurrectClass(0)
     this->setContextMenuPolicy(Qt::NoContextMenu);
     this->statusBar()->showMessage("Connect to server");
     this->setWindowIcon(QIcon(":/app_icon-1024.png"));
+
+    mLoader.setHost("geeknikcloud.hldns.ru");
+    mLoader.setPort(31415);
 }
 
 
@@ -308,7 +311,6 @@ void MainWindow::nextClass()
     mImageViewer->setImage(mWorkImage);
 }
 
-
 void MainWindow::sendToServer()
 {
     qDebug() << "nendToServer";
@@ -331,7 +333,6 @@ void MainWindow::sendToServer()
     }
 
 }
-
 
 void MainWindow::next()
 {

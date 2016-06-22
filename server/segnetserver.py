@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image 
 import argparse
 import random
 import struct
@@ -32,6 +32,8 @@ class SegentServer:
         self._paths = set(images_path)
         self._timeout = timeout
         self._users = {}
+
+        # print 'all task =', '\n'.join(list(self._paths))
 
         if not os.path.exists(result_path):
             os.mkdir(result_path)
@@ -91,7 +93,7 @@ class SegentServer:
 
     def __ans_request_processor(self, client, user_id):
         try:
-            bytes_img = client.recv(self.IMG_SIZE[0] * self.IMG_SIZE[1])
+            bytes_img = self.__recv(client)
             if not bytes_img:
                 return False, 'ANS image empty for client id {0}'.format(user_id)
             self.__save_image(bytes_img, self._users[user_id][0], self._result_path)
@@ -123,6 +125,19 @@ class SegentServer:
                 self._paths |= set(v[0])
                 self._users.pop(k)
         return True, rem_id
+
+    @staticmethod
+    def __recv(socket):
+        allData = ''
+        while True:
+
+            data = socket.recv(4096)
+            if not data:
+                socket.send('sps')
+                socket.close()
+                return allData
+            allData += data
+
 
     @staticmethod
     def __save_image(data, path, save_dir):

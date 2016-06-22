@@ -20,9 +20,9 @@ SettingDialog::SettingDialog(ImageLoader *imageLoader, QWidget *parent)
         QGridLayout *workLayout = new QGridLayout;
         {
             workLayout->addWidget(new QLabel(tr("Host address")), 0, 0);
-            workLayout->addWidget(mHost = new QLineEdit("127.0.0.1"), 0, 1);
+            workLayout->addWidget(mHost = new QLineEdit(imageLoader->ip()), 0, 1);
             workLayout->addWidget(new QLabel(tr("Port")), 1, 0);
-            workLayout->addWidget(mPort = new QLineEdit("131415"), 1, 1);
+            workLayout->addWidget(mPort = new QLineEdit(QString::number(imageLoader->port())), 1, 1);
         }
 
         QHBoxLayout *buttonLayout = new QHBoxLayout;

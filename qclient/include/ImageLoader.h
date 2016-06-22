@@ -23,6 +23,8 @@ public:
 
     void setPort(quint16 port);
     void setHost(const QString &host);
+    QString ip();
+    quint16 port();
 
     bool ok() const;
     bool connect() const;
@@ -34,7 +36,6 @@ private:
     quint16 mPort = 31415;
     mutable qint32 mId = -1;
     mutable QTcpSocket mTcpSocket;
-    QImage mImage;
 
     static int readID(const QByteArray &bytes);
     static QImage readImage(QByteArray &image);

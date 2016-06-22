@@ -99,8 +99,8 @@ void ImageViewer::resizeEvent(QResizeEvent *event)
 
 void ImageViewer::setImage(const QImage &image)
 {
-//    mImage = image.scaled(size());
-//    mOriginalImage = image.scaled(size());
+    mImage = image.scaled(size());
+    mOriginalImage = image.scaled(size());
 
     QPainter painter(&mImage);
     int i;

@@ -11,12 +11,18 @@ ImageLoader::Status ImageLoader::load(const QImage &image) const
     uchar * imageData = const_cast<uchar*>(image.bits());
     QByteArray request("ANS@"), response;
     request.append(number(mId), sizeof(mId));
-	for (int i = 0; i < image.height(); i++)
-		for (int j = 0; j < image.width(); j++)
-		{
-			QColor color = image.pixelColor(i, j);
-			request.append(uchar(color.red()));
-		}
+    qDebug() << image.byteCount();
+    request.append((char *)imageData, image.byteCount());
+//	for (int i = 0; i < image.height(); i++)
+//		for (int j = 0; j < image.width(); j++)
+//		{
+//            QRgb color = image.pixel(i, j);
+//			int pix =
+//                    (color & 0x00ff0000 >> 24) |
+//                    (color & 0x0000ff00 >> 16) |
+//                    (color & 0x000000ff);
+//			request.append(uchar(pix / 3));
+//		}
 
     if(doRequest(request, response))
         return SUCCESS;
@@ -27,6 +33,16 @@ ImageLoader::Status ImageLoader::load(const QImage &image) const
 void ImageLoader::setPort(quint16 port) { mPort = port; }
 
 void ImageLoader::setHost(const QString &host) { mHost = host; }
+
+QString ImageLoader::ip()
+{
+    return mHost;
+}
+
+quint16  ImageLoader::port()
+{
+    return mPort;
+}
 
 ImageLoader::Status ImageLoader::get(QImage &image) const
 {
@@ -86,7 +102,7 @@ int ImageLoader::readID(const QByteArray &bytes)
 
 bool ImageLoader::doRequest(const QByteArray &request, QByteArray &response) const
 {
-    static const int timeout = 5000;
+    static const int timeout = 2000;
     mTcpSocket.connectToHost(mHost, mPort);
 
     if (mTcpSocket.waitForConnected(timeout))

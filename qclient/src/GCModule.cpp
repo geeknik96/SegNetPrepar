@@ -54,6 +54,7 @@ QImage GCModule::cast(const cv::Mat &cvMat)
 			result.setPixelColor(j, i, qColor);
 		}
 	}
+    qDebug() << result.byteCount();
 	return result;
 	//return QImage::fromData(cvMat.data, QImage::Format_Grayscale8);
 }

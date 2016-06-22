@@ -15,7 +15,6 @@ class ImageViewer;
 class QPushButton;
 class QToolBar;
 
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -50,7 +49,6 @@ private:
 
     QVector<QRect> mRects;
     QVector<Path> mPaths;
-
 
     ImageViewer *mImageViewer;
     QToolBar *mToolBar;
