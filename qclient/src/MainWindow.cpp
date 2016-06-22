@@ -387,4 +387,3 @@ void MainWindow::prev()
     selectRectTool();
     updateStatusTip();
 }
-
