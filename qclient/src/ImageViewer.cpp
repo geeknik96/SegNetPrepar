@@ -7,6 +7,11 @@
 #include <QPainter>
 #include <QMouseEvent>
 
+#include <QDebug>
+
+#include <GCModule.h>
+#include <opencv2/highgui.hpp>
+
 ImageViewer::ImageViewer(QVector<QRect> &rects, QVector<Path> &paths, QWidget *parent)
     : QWidget(parent), mRects(rects), mPaths(paths), mMouseDown(false), mMode(NotAction) { }
 
@@ -99,25 +104,24 @@ void ImageViewer::resizeEvent(QResizeEvent *event)
 
 void ImageViewer::setImage(const QImage &image)
 {
-//    mImage = image.scaled(size());
-//    mOriginalImage = image.scaled(size());
+    mImage = image.scaled(size());
+    mOriginalImage = image.scaled(size());
 
-    QPainter painter(&mImage);
-    int i;
-    switch (mMode)
-    {
-        case Rect:
-            painter.drawRects(mRects);
-            break;
-        case PathBG:
-        case PathFG:
-            for (i = 0; i < mPaths.size(); i++)
-                painter.drawLines(mPaths[i].first);
-            break;
-        case NotAction:
-        default:
-            break;
-    }
+	QPainter painter(&mImage); int i;
+	switch (mMode)
+	{
+	case Rect:
+		painter.drawRects(mRects);
+		break;
+	case PathBG:
+	case PathFG:
+		for (i = 0; i < mPaths.size(); i++)
+			painter.drawLines(mPaths[i].first);
+		break;
+	case NotAction:
+	default:
+		break;
+	}
 
     mOriginalImage = mImage;
 

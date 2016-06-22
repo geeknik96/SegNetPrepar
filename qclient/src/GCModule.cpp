@@ -5,16 +5,57 @@
 #include "GCModule.h"
 
 #include <QDebug>
+#include <QRgb>
 
 cv::Mat GCModule::cast(const QImage &qImage)
 {
-    void * data = const_cast<uchar*>(qImage.bits());
-    return cv::Mat(qImage.height(), qImage.width(), CV_8UC3, data);
+	const int h = qImage.height();
+	const int w = qImage.width();
+	cv::Mat result(h, w, CV_8UC3);
+	for (int i = 0; i < h; i++)
+	{
+		for (int j = 0; j < w; j++)
+		{
+			const QColor qColor = qImage.pixelColor(j, i);
+			const cv::Vec3b color(qColor.red(), qColor.green(), qColor.blue());
+			result.at<cv::Vec3b>(i, j) = color;
+		}
+			
+	}
+	return result;
 }
 
 QImage GCModule::cast(const cv::Mat &cvMat)
 {
-    return QImage(cvMat.data, cvMat.cols, cvMat.rows, QImage::Format_RGB888);
+	const int h = cvMat.rows;
+	const int w = cvMat.cols;
+
+	if (cvMat.type() == CV_8UC3)
+	{
+		QImage result(w, h, QImage::Format_RGB888);
+		for (int i = 0; i < h; i++)
+		{
+			for (int j = 0; j < w; j++)
+			{
+				cv::Vec3b color = cvMat.at<cv::Vec3b>(i, j);
+				const QColor qColor(color[0], color[1], color[2]);
+				result.setPixelColor(j, i, qColor);
+			}
+		}
+		return result;
+	}
+	QImage result(w, h, QImage::Format_Grayscale8);
+	for (int i = 0; i < h; i++)
+	{
+		for (int j = 0; j < w; j++)
+		{
+			uchar color = cvMat.at<uchar>(i, j);
+			const QColor qColor(color, color, color);
+			result.setPixelColor(j, i, qColor);
+		}
+	}
+	return result;
+	//return QImage::fromData(cvMat.data, QImage::Format_Grayscale8);
 }
 
 cv::Rect GCModule::cast(const QRect &qRect)

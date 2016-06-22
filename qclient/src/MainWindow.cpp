@@ -274,6 +274,7 @@ void MainWindow::apply()
     mPaths.clear();
 
     const QImage &image = mGrubCutter.getCurrentImage();
+	qDebug() << image.size();
     if (image.isNull()) qDebug() << "image is null!!!";
     mImageViewer->setImage(image);
 

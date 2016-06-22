@@ -34,7 +34,7 @@ public:
 
     QImage get();
 
-private methods:
+public methods:
     static cv::Mat cast(const QImage &qImage);
     static QImage  cast(const cv::Mat &cvMat);
 

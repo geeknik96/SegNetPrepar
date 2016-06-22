@@ -11,8 +11,12 @@ ImageLoader::Status ImageLoader::load(const QImage &image) const
     uchar * imageData = const_cast<uchar*>(image.bits());
     QByteArray request("ANS@"), response;
     request.append(number(mId), sizeof(mId));
-    request.append(reinterpret_cast<char*>(imageData),
-                   image.byteCount());
+	for (int i = 0; i < image.height(); i++)
+		for (int j = 0; j < image.width(); j++)
+		{
+			QColor color = image.pixelColor(i, j);
+			request.append(uchar(color.red()));
+		}
 
     if(doRequest(request, response))
         return SUCCESS;
