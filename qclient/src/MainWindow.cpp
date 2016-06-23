@@ -98,6 +98,10 @@ void MainWindow::toolBarInit()
         spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         mToolBar->addWidget(spacer);
 
+		QAction *cancelImageAction = new QAction(QIcon(":/icons/cancel.png"), "Cancel", this);
+		connect(cancelImageAction, &QAction::triggered, this, &MainWindow::cancalImage);
+		mToolBar->addAction(cancelImageAction);
+
         mToolBar->addAction(QIcon(":/icons/qt.png"), tr("About &Qt"), qApp, &QApplication::aboutQt);
     }
     mToolBar->setMovable(false);
@@ -309,6 +313,14 @@ void MainWindow::nextClass()
     }
 
     mImageViewer->setImage(mWorkImage);
+}
+
+void MainWindow::cancalImage()
+{
+	mCurrectClass = 0;
+	nextImage();
+	selectRectTool();
+	updateStatusTip();
 }
 
 void MainWindow::sendToServer()

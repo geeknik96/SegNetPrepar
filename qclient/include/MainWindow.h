@@ -28,6 +28,7 @@ private slots:
     void selectCorrectionFTool();
     void selectCorrectionBTool();
 
+	void cancalImage();
     void nextImage();
     void nextClass();
     void sendToServer();
